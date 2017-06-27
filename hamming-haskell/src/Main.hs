@@ -2,25 +2,28 @@ module Main where
 import qualified Data.Text as T
 import qualified Data.Text.Unsafe as TU
 import qualified Data.Text.Array as TA
-import Data.Text 
 import Data.Text.Internal (Text(Text))
+import Data.Char (chr)
 import Criterion.Main
 import Control.DeepSeq
 
+stringTo :: Int -> T.Text
+stringTo n = T.pack . map (chr . (`mod` 2^16)) $ [1..n]
+
 derpA ::T.Text
 derpB ::T.Text
-derpA = ((T.pack) . show) [1..1000000]
-derpB = ((T.pack) . show) [1..1000000]
+derpA = stringTo 1000000
+derpB = stringTo 1000000
 
 tenMilA ::T.Text
 tenMilB ::T.Text
-tenMilA = ((T.pack) . show) [1..10000000]
-tenMilB = ((T.pack) . show) [1..10000000]
+tenMilA = stringTo 10000000
+tenMilB = stringTo 10000000
 
 hundredMilA ::T.Text
 hundredMilB ::T.Text
-hundredMilA = ((T.pack) . show) [1..100000]
-hundredMilB = ((T.pack) . show) [1..100000]
+hundredMilA = stringTo 100000
+hundredMilB = stringTo 100000
 
 hamming :: T.Text -> T.Text -> Maybe Int
 hamming a b =
